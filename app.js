@@ -9,6 +9,8 @@ const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/maps.routes');
 const rideRoutes = require('./routes/ride.routes');
+const swaggerUi = require('swagger-ui-express');
+const { swaggerSpec, swaggerUiOptions } = require('./swagger');
 
 connectToDb();
 
@@ -22,8 +24,19 @@ app.use(cookieParser());
 
 
 
+// ── Swagger UI ────────────────────────────────────────────────
+// Accessible at: http://localhost:5005/api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+
+// Expose raw OpenAPI JSON for tools like Postman / Insomnia
+app.get('/api-docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
+// ─────────────────────────────────────────────────────────────
+
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Hello World — API docs available at /api-docs');
 });
 
 app.use('/users', userRoutes);
