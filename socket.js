@@ -7,9 +7,17 @@ let io;
 function initializeSocket(server) {
     io = socketIo(server, {
         cors: {
-            origin: '*',
-            methods: [ 'GET', 'POST' ]
-        }
+            origin: [
+                'https://ride-share-frontend-zeta.vercel.app',
+                'http://localhost:5173',
+                'http://localhost:4173',
+            ],
+            methods: [ 'GET', 'POST' ],
+            credentials: true,
+        },
+        // Allow both websocket and polling so local dev still works,
+        // but the frontend forces websocket-only transport in production.
+        transports: [ 'websocket', 'polling' ],
     });
 
     io.on('connection', (socket) => {

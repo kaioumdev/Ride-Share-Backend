@@ -14,10 +14,24 @@ const { swaggerSpec, swaggerUiOptions } = require('./swagger');
 
 connectToDb();
 
-// app.use(cors());
+// Allowed origins: add any new frontend deployment URL here
+const allowedOrigins = [
+    'https://ride-share-frontend-zeta.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:4173', // vite preview
+];
+
 app.use(cors({
-  origin: [ 'https://ride-share-frontend-zeta.vercel.app', 'http://localhost:5173'],
-}))
+    origin: (origin, callback) => {
+        // Allow server-to-server calls (no origin) and listed origins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS: origin ${origin} not allowed`));
+        }
+    },
+    credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
