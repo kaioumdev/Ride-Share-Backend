@@ -31,8 +31,6 @@ module.exports.createRide = async (req, res) => {
                 captainsInRadius = await captainModel.find({ socketId: { $exists: true, $ne: null } });
             }
 
-            ride.otp = ""
-
             const rideWithUser = await rideModel.findOne({ _id: ride._id }).populate('user');
 
             captainsInRadius.forEach(captain => {
