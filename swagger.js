@@ -672,24 +672,65 @@ definition.paths['/rides/end-ride'] = {
   },
 };
 
+'use strict';
 // ─────────────────────────────────────────────────────────────
-// EXPORT SWAGGER SPEC + UI OPTIONS
+// SWAGGER SPEC + EXPRESS ROUTER
+// Serves /api-docs (HTML via CDN) and /api-docs.json (raw spec).
+// Using CDN instead of swagger-ui-express because Vercel serverless
+// cannot reliably serve the swagger-ui-dist static files, which
+// causes "SwaggerUIBundle is not defined" in the browser.
 // ─────────────────────────────────────────────────────────────
+const { Router } = require('express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
 const swaggerSpec = swaggerJsdoc({ definition, apis: [] });
 
-const swaggerUiOptions = {
-  customSiteTitle: 'Ubar Ride Share API Docs',
-  customCss: `
-    .swagger-ui .topbar { background-color: #1a1a2e; }
-    .swagger-ui .topbar .download-url-wrapper { display: none; }
-    .swagger-ui .info h2.title { color: #e94560; }
-  `,
-  swaggerOptions: {
-    persistAuthorization: true,
-    displayRequestDuration: true,
-    filter: true,
-    tryItOutEnabled: true,
-  },
-};
+const swaggerRouter = Router();
 
-module.exports = { swaggerSpec, swaggerUiOptions };
+// Raw OpenAPI JSON — used by the UI and tools like Postman / Insomnia
+swaggerRouter.get('/api-docs.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.json(swaggerSpec);
+});
+
+// Interactive Swagger UI loaded from CDN (works on Vercel + everywhere else)
+swaggerRouter.get('/api-docs', (req, res) => {
+    const specUrl = `${req.protocol}://${req.get('host')}/api-docs.json`;
+    res.setHeader('Content-Type', 'text/html');
+    res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ubar Ride Share API Docs</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css" />
+  <style>
+    body { margin: 0; background: #fafafa; }
+    .topbar { background-color: #1a1a2e !important; }
+    .topbar .download-url-wrapper { display: none !important; }
+    .swagger-ui .info h2.title { color: #e94560 !important; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function () {
+      SwaggerUIBundle({
+        url: "${specUrl}",
+        dom_id: '#swagger-ui',
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        layout: 'StandaloneLayout',
+        persistAuthorization: true,
+        displayRequestDuration: true,
+        filter: true,
+        tryItOutEnabled: true,
+      });
+    };
+  </script>
+</body>
+</html>`);
+});
+
+module.exports = { swaggerSpec, swaggerRouter };

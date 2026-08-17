@@ -23,8 +23,7 @@
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.14",
     "socket.io": "^4.8.3",
-    "swagger-jsdoc": "6.3.0",
-    "swagger-ui-express": "5.0.1"
+    "swagger-jsdoc": "6.3.0"
   },
   "devDependencies": {
     "openapi-types": "^12.1.3"
