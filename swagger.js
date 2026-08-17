@@ -672,7 +672,6 @@ definition.paths['/rides/end-ride'] = {
   },
 };
 
-'use strict';
 // ─────────────────────────────────────────────────────────────
 // SWAGGER SPEC + EXPRESS ROUTER
 // Serves /api-docs (HTML via CDN) and /api-docs.json (raw spec).
@@ -681,7 +680,6 @@ definition.paths['/rides/end-ride'] = {
 // causes "SwaggerUIBundle is not defined" in the browser.
 // ─────────────────────────────────────────────────────────────
 const { Router } = require('express');
-const swaggerJsdoc = require('swagger-jsdoc');
 
 const swaggerSpec = swaggerJsdoc({ definition, apis: [] });
 
