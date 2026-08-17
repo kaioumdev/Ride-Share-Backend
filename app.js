@@ -11,8 +11,6 @@ const mapsRoutes = require('./routes/maps.routes');
 const rideRoutes = require('./routes/ride.routes');
 const { swaggerRouter } = require('./swagger');
 
-connectToDb();
-
 const allowedOrigins = [
     'https://ride-share-frontend-zeta.vercel.app',
     'http://localhost:5173',
@@ -32,6 +30,19 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Ensure DB is connected before every request.
+// On Vercel each cold-start needs to establish the connection;
+// on warm instances connectToDb() returns immediately via the cache.
+app.use(async (req, res, next) => {
+    try {
+        await connectToDb();
+        next();
+    } catch (err) {
+        console.error('DB connection failed:', err.message);
+        res.status(500).json({ message: 'Database connection error. Please try again.' });
+    }
+});
 
 app.use(swaggerRouter);
 
