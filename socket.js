@@ -9,14 +9,13 @@ function initializeSocket(server) {
         cors: {
             origin: [
                 'https://ride-share-frontend-zeta.vercel.app',
+                'https://ride-share-backend-mauve.vercel.app',
                 'http://localhost:5173',
-                'http://localhost:4173',
+                'http://localhost:5005',
             ],
             methods: [ 'GET', 'POST' ],
             credentials: true,
         },
-        // Allow both websocket and polling so local dev still works,
-        // but the frontend forces websocket-only transport in production.
         transports: [ 'websocket', 'polling' ],
     });
 

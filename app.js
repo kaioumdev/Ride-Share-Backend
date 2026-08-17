@@ -12,13 +12,19 @@ const rideRoutes = require('./routes/ride.routes');
 const { swaggerRouter } = require('./swagger');
 
 const allowedOrigins = [
+    // Frontend deployments
     'https://ride-share-frontend-zeta.vercel.app',
+    // Backend's own domain — Swagger UI sends requests from here
+    'https://ride-share-backend-mauve.vercel.app',
+    // Local development
     'http://localhost:5173',
-    'http://localhost:4173',
+    'http://localhost:5005',
 ];
 
 app.use(cors({
     origin: (origin, callback) => {
+        // Allow requests with no origin (server-to-server, curl, Postman)
+        // AND all listed origins (frontend + backend's own Swagger UI)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
