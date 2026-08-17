@@ -58,9 +58,10 @@ const definition = {
     contact: { name: 'Ubar API Support', email: 'support@ubar.dev' },
     license: { name: 'ISC' },
   },
-  servers: [
+servers: [
+    { url: 'https://ride-share-backend-mauve.vercel.app', description: 'Production Server' },
     { url: 'http://localhost:5005', description: 'Local Development Server' },
-  ],
+],
   tags: [
     { name: 'Users',    description: 'Passenger registration, authentication & profile' },
     { name: 'Captains', description: 'Driver registration, authentication & profile' },
