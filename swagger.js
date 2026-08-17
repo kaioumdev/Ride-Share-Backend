@@ -693,7 +693,7 @@ swaggerRouter.get('/api-docs.json', (req, res) => {
 
 // Interactive Swagger UI loaded from CDN (works on Vercel + everywhere else)
 swaggerRouter.get('/api-docs', (req, res) => {
-    const specUrl = `${req.protocol}://${req.get('host')}/api-docs.json`;
+    const specUrl = '/api-docs.json';
     res.setHeader('Content-Type', 'text/html');
     res.send(`<!DOCTYPE html>
 <html lang="en">
