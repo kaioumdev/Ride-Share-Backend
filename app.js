@@ -18,6 +18,7 @@ const allowedOrigins = [
     'https://ride-share-backend-mauve.vercel.app',
     // Local development
     'http://localhost:5173',
+    'http://localhost:4173',
     'http://localhost:5005',
 ];
 
