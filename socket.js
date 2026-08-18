@@ -4,18 +4,33 @@ const captainModel = require('./models/captain.model');
 
 let io;
 
+// CORS origins for Socket.IO.
+// Add your Render backend URL to SOCKET_CORS_ORIGINS env var in Render dashboard
+// (comma-separated if multiple). No code change needed after deploy.
+function getAllowedOrigins() {
+    const base = [
+        'https://ride-share-frontend-zeta.vercel.app',
+        'https://ride-share-backend-mauve.vercel.app',
+        'http://localhost:5173',
+        'http://localhost:4173',
+        'http://localhost:5005',
+    ];
+    if (process.env.SOCKET_CORS_ORIGINS) {
+        const extra = process.env.SOCKET_CORS_ORIGINS.split(',').map(o => o.trim()).filter(Boolean);
+        return [ ...base, ...extra ];
+    }
+    return base;
+}
+
 function initializeSocket(server) {
     io = socketIo(server, {
         cors: {
-            origin: [
-                'https://ride-share-frontend-zeta.vercel.app',
-                'https://ride-share-backend-mauve.vercel.app',
-                'http://localhost:5173',
-                'http://localhost:5005',
-            ],
+            origin: getAllowedOrigins(),
             methods: [ 'GET', 'POST' ],
             credentials: true,
         },
+        // Both transports: websocket is preferred, polling is fallback.
+        // Render supports persistent connections so websocket will succeed.
         transports: [ 'websocket', 'polling' ],
     });
 
