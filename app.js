@@ -15,7 +15,7 @@ const allowedOrigins = [
     // Frontend deployments
     'https://ride-share-frontend-zeta.vercel.app',
     // Backend's own domain — Swagger UI sends requests from here
-    'https://ride-share-backend-mauve.vercel.app',
+    'https://ride-share-backend-say9.onrender.com',
     // Local development
     'http://localhost:5173',
     'http://localhost:4173',

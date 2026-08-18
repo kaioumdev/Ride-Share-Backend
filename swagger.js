@@ -59,7 +59,7 @@ const definition = {
     license: { name: 'ISC' },
   },
 servers: [
-    { url: 'https://ride-share-backend-mauve.vercel.app', description: 'Production Server' },
+    { url: 'https://ride-share-backend-say9.onrender.com', description: 'Production Server' },
     { url: 'http://localhost:5005', description: 'Local Development Server' },
 ],
   tags: [

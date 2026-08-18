@@ -10,7 +10,7 @@ let io;
 function getAllowedOrigins() {
     const base = [
         'https://ride-share-frontend-zeta.vercel.app',
-        'https://ride-share-backend-mauve.vercel.app',
+        'https://ride-share-backend-say9.onrender.com',
         'http://localhost:5173',
         'http://localhost:4173',
         'http://localhost:5005',
