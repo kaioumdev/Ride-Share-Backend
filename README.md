@@ -336,14 +336,14 @@ Fare = Base Fare + (Distance in km × Per-Km Rate) + (Duration in min × Per-Min
 
 | Vehicle | Base Fare | Per Km | Per Minute | Capacity |
 |---|---|---|---|---|
-| **Auto** | ₹30 | ₹10 | ₹2 | 3 |
-| **Car** | ₹50 | ₹15 | ₹3 | 4 |
-| **Moto** | ₹20 | ₹8 | ₹1.5 | 1 |
+| **Auto** | ৳30 | ৳10 | ৳2 | 3 |
+| **Car** | ৳50 | ৳15 | ৳3 | 4 |
+| **Moto** | ৳20 | ৳8 | ৳1.5 | 1 |
 
 **Example:** Connaught Place → India Gate (~12.5 km, 33 min)
-- Auto: ₹30 + (12.5 × 10) + (33 × 2) = **₹221**
-- Car: ₹50 + (12.5 × 15) + (33 × 3) = **₹336**
-- Moto: ₹20 + (12.5 × 8) + (33 × 1.5) = **₹169**
+- Auto: ৳30 + (12.5 × 10) + (33 × 2) = **৳221**
+- Car: ৳50 + (12.5 × 15) + (33 × 3) = **৳336**
+- Moto: ৳20 + (12.5 × 8) + (33 × 1.5) = **৳169**
 
 ---
 
